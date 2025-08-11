@@ -12,12 +12,12 @@ export async function getServerSideProps(context) {
 
   return {
     redirect: {
-      destination: "https://google.com", // fallback nếu không có link
+      destination: "https://google.com",
       permanent: false,
     },
   };
 }
 
 export default function Home() {
-  return null; // Không cần render gì cả
+  return null;
 }
