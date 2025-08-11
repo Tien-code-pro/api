@@ -1,20 +1,23 @@
 export async function getServerSideProps(context) {
   const { link } = context.query;
 
-  if (link) {
+  if (link && link.startsWith("http")) {
     return {
       redirect: {
         destination: link,
-        permanent: false, // false = 302, true = 301
+        permanent: false,
       },
     };
   }
 
   return {
-    props: {}, // Nếu không có link thì hiển thị trang mặc định
+    redirect: {
+      destination: "https://google.com", // fallback nếu không có link
+      permanent: false,
+    },
   };
 }
 
 export default function Home() {
-  return <h1>Vui lòng truyền ?link=URL để redirect</h1>;
+  return null; // Không cần render gì cả
 }
