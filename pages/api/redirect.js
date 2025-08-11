@@ -1,15 +1,19 @@
 export default function handler(req, res) {
-  const { to } = req.query;
+  const { url } = req.query;
 
-  if (!to) {
-    return res.status(400).json({ error: "Missing 'to' parameter" });
+  if (!url) {
+    return res.status(400).json({ error: "Missing 'url' query parameter" });
   }
 
-  // Chỉ cho phép http/https
-  if (!/^https?:\/\/.+/i.test(to)) {
-    return res.status(400).json({ error: "Invalid URL" });
-  }
+  try {
+    // Chỉ cho phép redirect nếu URL bắt đầu bằng http hoặc https
+    if (!/^https?:\/\//.test(url)) {
+      return res.status(400).json({ error: "Invalid URL format" });
+    }
 
-  res.writeHead(302, { Location: to });
-  res.end();
+    res.writeHead(302, { Location: url });
+    res.end();
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
