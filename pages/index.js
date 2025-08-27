@@ -1,36 +1,32 @@
 export async function getServerSideProps(context) {
-  const { link } = context.query;
+  const { to } = context.query;
 
-  // Nếu có link hợp lệ thì redirect
-  if (link && typeof link === "string" && link.startsWith("http")) {
+  // Nếu có to hợp lệ (bắt đầu bằng http) -> redirect
+  if (to && typeof to === "string" && to.startsWith("http")) {
     return {
       redirect: {
-        destination: link,
+        destination: to,
         permanent: false,
       },
     };
   }
 
-  // Nếu không có link → trả về JSON lỗi
-  context.res.statusCode = 400; // đặt HTTP status = 400
-  return {
-    props: {
+  // Nếu không có to -> trả JSON lỗi
+  context.res.statusCode = 400;
+  context.res.setHeader("Content-Type", "application/json");
+  context.res.end(
+    JSON.stringify({
+      message: "Bad Request",
       error: {
-        message: "Bad Request",
-        error: {
-          code: 400,
-          info: [],
-        },
+        code: 400,
+        info: [],
       },
-    },
-  };
+    })
+  );
+
+  return { props: {} }; // tránh lỗi của Next.js
 }
 
-export default function Home({ error }) {
-  if (error) {
-    // Xuất JSON lỗi thay vì HTML
-    return <pre style={{ color: "red" }}>{JSON.stringify(error, null, 2)}</pre>;
-  }
-
-  return null;
+export default function Home() {
+  return null; // vì đã end() response bằng JSON
 }
