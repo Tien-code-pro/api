@@ -19,6 +19,7 @@ thì chạy :
 
 1. yarn install
 2. yarn dev
+
    Nếu prj mới tinh
    thì chạy :
    npx create-next-app@latest api
