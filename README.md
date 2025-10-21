@@ -24,3 +24,6 @@ thì chạy :
    thì chạy :
 
    npx create-next-app@latest api
+
+   - Trong vercel đường dẫn bắt buộc phải có đuôi .vercel.app thì mới add được domain mới
+   - Đoạn đường dẫn đầu thì thoải mái sửa theo mong muốn
