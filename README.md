@@ -22,4 +22,5 @@ thì chạy :
 
    Nếu prj mới tinh
    thì chạy :
+
    npx create-next-app@latest api
